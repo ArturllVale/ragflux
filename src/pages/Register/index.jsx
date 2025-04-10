@@ -157,7 +157,7 @@ const Register = () => {
           <button 
             type="submit" 
             disabled={isSubmitting}
-            className="p-3 bg-primary text-white rounded font-semibold mt-4 transition-colors hover:bg-secondary disabled:bg-gray-600 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-transparent text-sky-400 border-2 border-primary rounded font-semibold transition-all hover:bg-primary/10 hover:-translate-y-1"
           >
             {isSubmitting ? 'Criando conta...' : 'Criar Conta'}
           </button>
