@@ -1,130 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const LoginContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-`;
-
-const FormCard = styled.div`
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 400px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #fff;
-  text-align: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  width: 100%;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const Label = styled.label`
-  color: #ddd;
-  font-size: 1rem;
-`;
-
-const Input = styled.input`
-  padding: 0.8rem;
-  border-radius: 4px;
-  border: 1px solid ${props => props.$error ? '#e63946' : 'rgba(255, 255, 255, 0.2)'};
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  
-  &:focus {
-    outline: none;
-    border-color: #4361ee;
-  }
-`;
-
-const ErrorMessage = styled.p`
-  color: #e63946;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-`;
-
-const SubmitButton = styled.button`
-  padding: 0.8rem;
-  background-color: #4361ee;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-  
-  &:hover {
-    background-color: #3a56d4;
-  }
-  
-  &:disabled {
-    background-color: #6c757d;
-    cursor: not-allowed;
-  }
-`;
-
-const ForgotPassword = styled.div`
-  margin-top: 1rem;
-  text-align: right;
-  
-  a {
-    color: #ddd;
-    text-decoration: none;
-    font-size: 0.9rem;
-    
-    &:hover {
-      color: #4361ee;
-      text-decoration: underline;
-    }
-  }
-`;
-
-const RegisterLink = styled.div`
-  margin-top: 1.5rem;
-  text-align: center;
-  color: #ddd;
-  
-  a {
-    color: #4361ee;
-    text-decoration: none;
-    font-weight: 600;
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+// Componente Login com Tailwind CSS
 
 // Schema de validação com yup
 const schema = yup.object().shape({
@@ -163,49 +43,53 @@ const Login = () => {
   };
   
   return (
-    <LoginContainer>
-      <FormCard>
-        <Title>Entrar</Title>
+    <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-gradient-to-br from-dark to-dark-light">
+      <div className="bg-white/5 rounded-lg p-8 w-full max-w-md backdrop-blur-md border border-white/10 shadow-lg">
+        <h1 className="text-3xl mb-6 text-white text-center">Entrar</h1>
         
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup>
-            <Label htmlFor="username">Nome de Usuário</Label>
-            <Input 
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="username" className="text-gray-300">Nome de Usuário</label>
+            <input 
               id="username"
               type="text" 
               placeholder="Digite seu nome de usuário"
-              $error={!!errors.username}
+              className={`p-3 rounded border ${errors.username ? 'border-red-500' : 'border-white/20'} bg-white/5 text-white focus:outline-none focus:border-primary transition-colors`}
               {...register('username')}
             />
-            {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}
-          </FormGroup>
+            {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>}
+          </div>
           
-          <FormGroup>
-            <Label htmlFor="password">Senha</Label>
-            <Input 
+          <div className="flex flex-col gap-2">
+            <label htmlFor="password" className="text-gray-300">Senha</label>
+            <input 
               id="password"
               type="password" 
               placeholder="Digite sua senha"
-              $error={!!errors.password}
+              className={`p-3 rounded border ${errors.password ? 'border-red-500' : 'border-white/20'} bg-white/5 text-white focus:outline-none focus:border-primary transition-colors`}
               {...register('password')}
             />
-            {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
-          </FormGroup>
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+          </div>
           
-          <ForgotPassword>
-            <Link to="/forgot-password">Esqueceu sua senha?</Link>
-          </ForgotPassword>
+          <div className="text-right mt-4">
+            <Link to="/forgot-password" className="text-gray-300 text-sm hover:text-primary hover:underline">Esqueceu sua senha?</Link>
+          </div>
           
-          <SubmitButton type="submit" disabled={isSubmitting}>
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="p-3 bg-primary text-white rounded font-semibold mt-4 transition-colors hover:bg-secondary disabled:bg-gray-600 disabled:cursor-not-allowed"
+          >
             {isSubmitting ? 'Entrando...' : 'Entrar'}
-          </SubmitButton>
-        </Form>
+          </button>
+        </form>
         
-        <RegisterLink>
-          Não tem uma conta? <Link to="/register">Criar conta</Link>
-        </RegisterLink>
-      </FormCard>
-    </LoginContainer>
+        <div className="mt-6 text-center text-gray-300">
+          Não tem uma conta? <Link to="/register" className="text-primary font-semibold hover:underline">Crie uma agora</Link>
+        </div>
+      </div>
+    </div>
   );
 };
 

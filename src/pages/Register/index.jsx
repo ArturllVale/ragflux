@@ -1,157 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const RegisterContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-`;
-
-const FormCard = styled.div`
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 500px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #fff;
-  text-align: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  width: 100%;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const Label = styled.label`
-  color: #ddd;
-  font-size: 1rem;
-`;
-
-const Input = styled.input`
-  padding: 0.8rem;
-  border-radius: 4px;
-  border: 1px solid ${props => props.$error ? '#e63946' : 'rgba(255, 255, 255, 0.2)'};
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  
-  &:focus {
-    outline: none;
-    border-color: #4361ee;
-  }
-`;
-
-const RadioGroup = styled.div`
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 0.5rem;
-`;
-
-const RadioLabel = styled.label`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #ddd;
-  cursor: pointer;
-`;
-
-const RadioInput = styled.input`
-  cursor: pointer;
-`;
-
-const CheckboxGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-`;
-
-const CheckboxLabel = styled.label`
-  color: #ddd;
-  cursor: pointer;
-  
-  a {
-    color: #4361ee;
-    text-decoration: none;
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const CheckboxInput = styled.input`
-  cursor: pointer;
-`;
-
-const ErrorMessage = styled.p`
-  color: #e63946;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-`;
-
-const SubmitButton = styled.button`
-  padding: 0.8rem;
-  background-color: #4361ee;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-  
-  &:hover {
-    background-color: #3a56d4;
-  }
-  
-  &:disabled {
-    background-color: #6c757d;
-    cursor: not-allowed;
-  }
-`;
-
-const LoginLink = styled.div`
-  margin-top: 1.5rem;
-  text-align: center;
-  color: #ddd;
-  
-  a {
-    color: #4361ee;
-    text-decoration: none;
-    font-weight: 600;
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+// Componente Register com Tailwind CSS
 
 // Schema de validação com yup
 const schema = yup.object().shape({
@@ -207,107 +60,114 @@ const Register = () => {
   };
   
   return (
-    <RegisterContainer>
-      <FormCard>
-        <Title>Criar Conta</Title>
+    <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-gradient-to-br from-dark to-dark-light">
+      <div className="bg-white/5 rounded-lg p-8 w-full max-w-xl backdrop-blur-md border border-white/10 shadow-lg">
+        <h1 className="text-3xl mb-6 text-white text-center">Criar Conta</h1>
         
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup>
-            <Label htmlFor="username">Nome de Usuário</Label>
-            <Input 
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="username" className="text-gray-300">Nome de Usuário</label>
+            <input 
               id="username"
               type="text" 
               placeholder="Digite seu nome de usuário"
-              $error={!!errors.username}
+              className={`p-3 rounded border ${errors.username ? 'border-red-500' : 'border-white/20'} bg-white/5 text-white focus:outline-none focus:border-primary transition-colors`}
               {...register('username')}
             />
-            {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}
-          </FormGroup>
+            {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>}
+          </div>
           
-          <FormGroup>
-            <Label htmlFor="password">Senha</Label>
-            <Input 
+          <div className="flex flex-col gap-2">
+            <label htmlFor="password" className="text-gray-300">Senha</label>
+            <input 
               id="password"
               type="password" 
               placeholder="Digite sua senha"
-              $error={!!errors.password}
+              className={`p-3 rounded border ${errors.password ? 'border-red-500' : 'border-white/20'} bg-white/5 text-white focus:outline-none focus:border-primary transition-colors`}
               {...register('password')}
             />
-            {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
-          </FormGroup>
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+          </div>
           
-          <FormGroup>
-            <Label htmlFor="confirmPassword">Confirmar Senha</Label>
-            <Input 
+          <div className="flex flex-col gap-2">
+            <label htmlFor="confirmPassword" className="text-gray-300">Confirmar Senha</label>
+            <input 
               id="confirmPassword"
               type="password" 
               placeholder="Confirme sua senha"
-              $error={!!errors.confirmPassword}
+              className={`p-3 rounded border ${errors.confirmPassword ? 'border-red-500' : 'border-white/20'} bg-white/5 text-white focus:outline-none focus:border-primary transition-colors`}
               {...register('confirmPassword')}
             />
-            {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword.message}</ErrorMessage>}
-          </FormGroup>
+            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
+          </div>
           
-          <FormGroup>
-            <Label htmlFor="email">Email</Label>
-            <Input 
+          <div className="flex flex-col gap-2">
+            <label htmlFor="email" className="text-gray-300">Email</label>
+            <input 
               id="email"
               type="email" 
               placeholder="Digite seu email"
-              $error={!!errors.email}
+              className={`p-3 rounded border ${errors.email ? 'border-red-500' : 'border-white/20'} bg-white/5 text-white focus:outline-none focus:border-primary transition-colors`}
               {...register('email')}
             />
-            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-          </FormGroup>
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+          </div>
           
-          <FormGroup>
-            <Label>Sexo</Label>
-            <RadioGroup>
-              <RadioLabel>
-                <RadioInput 
+          <div className="flex flex-col gap-2">
+            <label className="text-gray-300">Sexo</label>
+            <div className="flex gap-6 mt-2">
+              <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                <input 
                   type="radio" 
                   value="M" 
+                  className="cursor-pointer"
                   {...register('sex')} 
                 />
                 Masculino
-              </RadioLabel>
+              </label>
               
-              <RadioLabel>
-                <RadioInput 
+              <label className="flex items-center gap-2 text-gray-300 cursor-pointer">
+                <input 
                   type="radio" 
                   value="F" 
+                  className="cursor-pointer"
                   {...register('sex')} 
                 />
                 Feminino
-              </RadioLabel>
-            </RadioGroup>
-            {errors.sex && <ErrorMessage>{errors.sex.message}</ErrorMessage>}
-          </FormGroup>
+              </label>
+            </div>
+            {errors.sex && <p className="text-red-500 text-sm mt-1">{errors.sex.message}</p>}
+          </div>
           
-          <FormGroup>
-            <CheckboxGroup>
-              <CheckboxInput 
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2 mt-2">
+              <input 
                 id="terms" 
                 type="checkbox" 
+                className="cursor-pointer"
                 {...register('terms')} 
               />
-              <CheckboxLabel htmlFor="terms">
-                Eu li e aceito os <Link to="/terms">Termos de Uso</Link> e <Link to="/privacy">Política de Privacidade</Link>
-              </CheckboxLabel>
-            </CheckboxGroup>
-            {errors.terms && <ErrorMessage>{errors.terms.message}</ErrorMessage>}
-          </FormGroup>
+              <label htmlFor="terms" className="text-gray-300 cursor-pointer">
+                Eu li e aceito os <Link to="/terms" className="text-primary hover:underline">Termos de Uso</Link> e <Link to="/privacy" className="text-primary hover:underline">Política de Privacidade</Link>
+              </label>
+            </div>
+            {errors.terms && <p className="text-red-500 text-sm mt-1">{errors.terms.message}</p>}
+          </div>
           
-          <SubmitButton type="submit" disabled={isSubmitting}>
+          <button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="p-3 bg-primary text-white rounded font-semibold mt-4 transition-colors hover:bg-secondary disabled:bg-gray-600 disabled:cursor-not-allowed"
+          >
             {isSubmitting ? 'Criando conta...' : 'Criar Conta'}
-          </SubmitButton>
-        </Form>
+          </button>
+        </form>
         
-        <LoginLink>
-          Já tem uma conta? <Link to="/login">Faça login</Link>
-        </LoginLink>
-      </FormCard>
-    </RegisterContainer>
+        <div className="mt-6 text-center text-gray-300">
+          Já tem uma conta? <Link to="/login" className="text-primary font-semibold hover:underline">Faça login</Link>
+        </div>
+      </div>
+    </div>
   );
 };
 

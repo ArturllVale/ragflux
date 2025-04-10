@@ -1,144 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
-const HeaderContainer = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-const Logo = styled(Link)`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-  text-decoration: none;
-  text-shadow: 0 0 10px rgba(0, 0, 255, 0.3);
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  gap: 1.5rem;
-  
-  @media (max-width: 768px) {
-    position: absolute;
-    flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.9);
-    top: 100%;
-    right: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
-    width: 70%;
-    max-width: 300px;
-    height: calc(100vh - 60px);
-    padding: 2rem;
-    gap: 2rem;
-    transition: right 0.3s ease-in-out;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-  }
-`;
-
-const NavLink = styled(Link)`
-  color: #ddd;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-  
-  &:hover {
-    color: #4361ee;
-  }
-  
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
-`;
-
-const HamburgerButton = styled.button`
-  display: none;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  z-index: 101;
-  
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 2rem;
-    height: 2rem;
-  }
-`;
-
-const HamburgerLine = styled.span`
-  width: 100%;
-  height: 3px;
-  background-color: #fff;
-  transition: all 0.3s ease;
-  border-radius: 2px;
-  
-  &:nth-child(1) {
-    transform: ${({ isOpen }) => isOpen ? 'rotate(45deg) translate(5px, 5px)' : 'rotate(0)'};
-  }
-  
-  &:nth-child(2) {
-    opacity: ${({ isOpen }) => isOpen ? '0' : '1'};
-    transform: ${({ isOpen }) => isOpen ? 'translateX(-20px)' : 'translateX(0)'};
-  }
-  
-  &:nth-child(3) {
-    transform: ${({ isOpen }) => isOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'rotate(0)'};
-  }
-`;
-
-const MainContent = styled.main`
-  min-height: 100vh;
-  padding-top: 0;
-  width: 100%;
-`;
-
-const FooterContainer = styled.footer`
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 2rem;
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-const FooterText = styled.p`
-  color: #aaa;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-`;
-
-const FooterLinks = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-`;
-
-const FooterLink = styled(Link)`
-  color: #ddd;
-  text-decoration: none;
-  font-size: 0.9rem;
-  
-  &:hover {
-    color: #4361ee;
-    text-decoration: underline;
-  }
-`;
 
 const Layout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -149,32 +10,41 @@ const Layout = ({ children }) => {
   
   return (
     <>
-      <HeaderContainer>
-        <Logo to="/">RagFlux</Logo>
-        <HamburgerButton onClick={toggleMenu}>
-          <HamburgerLine isOpen={isMenuOpen} />
-          <HamburgerLine isOpen={isMenuOpen} />
-          <HamburgerLine isOpen={isMenuOpen} />
-        </HamburgerButton>
-        <Nav isOpen={isMenuOpen}>
-          <NavLink to="/" onClick={() => setIsMenuOpen(false)}>Home</NavLink>
-          <NavLink to="/register" onClick={() => setIsMenuOpen(false)}>Criar Conta</NavLink>
-          <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>Entrar</NavLink>
-        </Nav>
-      </HeaderContainer>
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-4 md:px-8 bg-black/30 backdrop-blur-md border-b border-white/10">
+        <Link to="/" className="text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(0,0,255,0.3)]">RagFlux</Link>
+        
+        <button 
+          onClick={toggleMenu}
+          className="md:hidden flex flex-col justify-around w-8 h-8 bg-transparent border-none cursor-pointer p-2 z-[101]"
+        >
+          <span className={`w-full h-[3px] bg-white rounded-sm transition-all ${isMenuOpen ? 'rotate-45 translate-y-[8px]' : ''}`}></span>
+          <span className={`w-full h-[3px] bg-white rounded-sm transition-all ${isMenuOpen ? 'opacity-0 -translate-x-5' : ''}`}></span>
+          <span className={`w-full h-[3px] bg-white rounded-sm transition-all ${isMenuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`}></span>
+        </button>
+        
+        <nav className={`flex md:flex-row md:gap-6 md:static md:w-auto md:h-auto md:bg-transparent md:p-0 md:border-0 md:translate-x-0
+          absolute flex-col gap-8 top-full right-0 w-[70%] max-w-[300px] h-[calc(100vh-60px)] p-8 
+          bg-black/90 border-l border-white/10 transition-all duration-300 ease-in-out
+          ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          <Link to="/" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-primary transition-colors md:text-base text-lg font-medium">Home</Link>
+          <Link to="/register" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-primary transition-colors md:text-base text-lg font-medium">Criar Conta</Link>
+          <Link to="/login" onClick={() => setIsMenuOpen(false)} className="text-gray-300 hover:text-primary transition-colors md:text-base text-lg font-medium">Entrar</Link>
+        </nav>
+      </header>
       
-      <MainContent>
+      <main className="min-h-screen w-full">
         {children}
-      </MainContent>
+      </main>
       
-      <FooterContainer>
-        <FooterText>© {new Date().getFullYear()} RagFlux. Todos os direitos reservados.</FooterText>
-        <FooterLinks>
-          <FooterLink to="/terms">Termos de Uso</FooterLink>
-          <FooterLink to="/privacy">Política de Privacidade</FooterLink>
-          <FooterLink to="/contact">Contato</FooterLink>
-        </FooterLinks>
-      </FooterContainer>
+      <footer className="bg-black/50 p-8 text-center border-t border-white/10">
+        <p className="text-gray-400 text-sm mb-4">© {new Date().getFullYear()} RagFlux. Todos os direitos reservados.</p>
+        <div className="flex justify-center gap-6 mt-4 md:flex-row flex-col md:gap-6">
+          <Link to="/terms" className="text-gray-300 hover:text-primary hover:underline text-sm">Termos de Uso</Link>
+          <Link to="/privacy" className="text-gray-300 hover:text-primary hover:underline text-sm">Política de Privacidade</Link>
+          <Link to="/contact" className="text-gray-300 hover:text-primary hover:underline text-sm">Contato</Link>
+        </div>
+      </footer>
     </>
   );
 };
