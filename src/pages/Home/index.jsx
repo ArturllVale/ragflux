@@ -8,7 +8,7 @@ const Home = () => {
     <div className="flex flex-col items-center justify-center min-h-screen p-8 text-center bg-gradient-to-br from-dark to-dark-light">
       <h1 className="text-5xl mb-4 text-white drop-shadow-[0_0_10px_rgba(0,0,255,0.5)]">RagFlux</h1>
       <p className="text-xl mb-8 text-gray-300 max-w-3xl">
-        Bem-vindo ao portal oficial do seu jogo favorito. Crie sua conta, faça login e comece sua aventura agora mesmo!
+        Bem-vindo ao portal oficial do seu favorito. Crie sua conta, faça login e comece sua aventura agora mesmo!
       </p>
       
       <div className="flex gap-4 mt-8 flex-wrap justify-center">
